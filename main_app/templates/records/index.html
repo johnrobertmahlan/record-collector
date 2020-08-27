@@ -6,11 +6,13 @@
 {% for record in records %}
 
 <div class="card">
-    <div class="card-content">
-        <span class="card-title">{{ record.name }}</span>
-        <p>Record Label: {{ record.record_label }}</p>
-        <p>Release Date: {{ record.release_year }}</p>
-    </div>
+    <a href="{% url 'detail' record.id %}">
+        <div class="card-content">
+            <span class="card-title">{{ record.name }}</span>
+            <p>Record Label: {{ record.record_label }}</p>
+            <p>Release Date: {{ record.release_year }}</p>
+        </div>
+    </a>
 </div>
 
 {% endfor %}
