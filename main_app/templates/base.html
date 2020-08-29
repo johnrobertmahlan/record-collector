@@ -22,7 +22,10 @@
                             <a href="/about">About</a>
                         </li>
                         <li>
-                            <a href="/records">View All BossTones Records</a>
+                            <a href="{% url 'records_create' %}">Add a Record</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'index' %}">View All BossTones Records</a>
                         </li>
                     </ul>
                 </ul>
