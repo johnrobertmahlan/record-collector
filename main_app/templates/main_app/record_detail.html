@@ -7,6 +7,10 @@
         <p>Record Label: {{ record.record_label }}</p>
         <p>Release Date: {{ record.release_year }}</p>
     </div>
+    <div class="card-action">
+        <a href="{% url 'records_update' record.id %}">Edit</a>
+        <a href="{% url 'records_delete' record.id %}">Delete</a>
+    </div>
 </div>
 
 {% endblock %}
