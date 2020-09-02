@@ -6,6 +6,7 @@
 body {
     display: flex;
     min-height: 100vh;
+    min-width: 100vw;
     flex-direction: column;
 }
 
@@ -23,6 +24,8 @@ main {
     width: 30vw;
 }
 
-/* .page-footer {
+.page-footer {
     background-color: black !important;
-} */
+    width: 100vw !important;
+    /* padding-right: 0; */
+}

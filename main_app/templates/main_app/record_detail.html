@@ -1,16 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="card">
-    <div class="card-content">
-        <span class="card-title">{{ record.name }}</span>
-        <p>Record Label: {{ record.record_label }}</p>
-        <p>Release Date: {{ record.release_year }}</p>
+<div class="row">
+    <div class="col s6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ record.name }}</span>
+                <p>Record Label: {{ record.record_label }}</p>
+                <p>Release Date: {{ record.release_date }}</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'records_update' record.id %}">Edit</a>
+                <a href="{% url 'records_delete' record.id %}">Delete</a>
+            </div>
+        </div>
     </div>
-    <div class="card-action">
-        <a href="{% url 'records_update' record.id %}">Edit</a>
-        <a href="{% url 'records_delete' record.id %}">Delete</a>
+
+    <div class="col s6">
+        <table class="striped">
+            <thead>
+                <tr><th>Date</th><th>Medium</th><th>All the Way Through?</th></tr>
+            </thead>
+            <tbody>
+                {% for listening in record.listening_set.all %}
+                <tr>
+                    <td>{{ listening.date }}</td>
+                    <td>{{ listening.get_medium_display }}</td>
+                    <td>{{ listening.whole }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
-
 {% endblock %}
