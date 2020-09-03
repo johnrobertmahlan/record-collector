@@ -22,7 +22,8 @@
     <div class="col s6">
         <form action="{% url 'add_listening' record.id  %}" method="POST">
             {% csrf_token %}
-            {{ listening_form.as_p }}
+                {{ listening_form.as_p }}
+                <!-- {{ listening_form.as_p }} I will need to figure out whether I want to render manually or remove the 'whole' attribute from my model -->
             <input type="submit" class="btn" value="Did You Listen to this Record?">
         </form>
         <table class="striped">
@@ -41,4 +42,17 @@
         </table>
     </div>
 </div>
+
+<script>
+    let dateEl = document.getElementById('id_date');
+    M.Datepicker.init(dateEl, {
+        format: 'yyyy-mm-dd',
+        defaultDate: new Date(),
+        setDefaultDate: true,
+        autoClose: true
+    });
+
+    let medEl = document.getElementById('id_medium');
+    M.FormSelect.init(medEl);
+</script>
 {% endblock %}
