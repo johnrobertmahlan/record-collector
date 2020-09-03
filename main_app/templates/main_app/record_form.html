@@ -5,9 +5,19 @@
 <form action="" method="POST">
     {% csrf_token %}
     <table>
-        {{ form.as_table }}
+        {{ form.as_p }}
     </table>
     <input type="submit" value="Add Record!" class="btn">
 </form>
+
+<script>
+    let dateEl = document.getElementById('id_release_date');
+    M.Datepicker.init(dateEl, {
+        format: 'yyyy-mm-dd',
+        defaultDate: new Date(),
+        setDefaultDate: true,
+        autoClose: true
+    });
+</script>
 
 {% endblock %}
