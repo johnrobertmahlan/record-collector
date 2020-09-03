@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>
+    {{ record.name }}
+</h1>
 <div class="row">
     <div class="col s6">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ record.name }}</span>
+                <span class="card-title">{{ record.artist }}</span>
                 <p>Record Label: {{ record.record_label }}</p>
                 <p>Release Date: {{ record.release_date }}</p>
             </div>
@@ -17,6 +20,11 @@
     </div>
 
     <div class="col s6">
+        <form action="{% url 'add_listening' record.id  %}" method="POST">
+            {% csrf_token %}
+            {{ listening_form.as_p }}
+            <input type="submit" class="btn" value="Did You Listen to this Record?">
+        </form>
         <table class="striped">
             <thead>
                 <tr><th>Date</th><th>Medium</th><th>All the Way Through?</th></tr>

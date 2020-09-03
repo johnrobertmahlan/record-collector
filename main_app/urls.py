@@ -7,8 +7,8 @@ urlpatterns = [
     # path('records/', views.records_index, name='index'),
     path('records/', views.RecordList.as_view(), name='index'),
     path('records/create/', views.RecordCreate.as_view(), name='records_create'),
-    # path('records/<int:record_id>/', views.records_detail, name='detail'),
-    path('records/<int:pk>/', views.RecordDetail.as_view(), name='detail'),
+    path('records/<int:record_id>/', views.records_detail, name='records_detail'),
     path('records/<int:pk>/update/', views.RecordUpdate.as_view(), name='records_update'),
     path('records/<int:pk>/delete/', views.RecordDelete.as_view(), name='records_delete'),
+    path('listenings/<int:pk>/add_listening', views.add_listening, name='add_listening')
 ]

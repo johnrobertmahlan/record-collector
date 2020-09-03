@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <title>The Mighty Mighty BossTones Record Collector</title>
+    <title>Track Your Records!</title>
 </head>
 <body>
     <header class="navbar-fixed">
@@ -15,17 +15,17 @@
             <div class="nav-wrapper">
                 <ul>
                     <li>
-                        <a href="/" class="left brand-logo">&nbsp;&nbsp;The Mighty Mighty BossTones Record Collector</a>
+                        <a href="/" class="left brand-logo">&nbsp;&nbsp;Track Your Records!</a>
                     </li>
                     <ul class="right">
                         <li>
                             <a href="/about">About</a>
                         </li>
                         <li>
-                            <a href="{% url 'records_create' %}">Add a Record</a>
+                            <a href="{% url 'records_create' %}">Add To Your Collection</a>
                         </li>
                         <li>
-                            <a href="{% url 'index' %}">View All BossTones Records</a>
+                            <a href="{% url 'index' %}">Check Out All Your Records</a>
                         </li>
                     </ul>
                 </ul>

@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>BossTones Records</h1>
+<h1>Here's Your Records</h1>
 
 {% for record in records %}
 
 <div class="card">
-    <a href="{% url 'detail' record.id %}">
+    <a href="{% url 'records_detail' record.id %}">
         <div class="card-content">
             <span class="card-title">{{ record.name }}</span>
             <p>Record Label: {{ record.record_label }}</p>

@@ -12,6 +12,7 @@ MEDIA = (
 
 class Record(models.Model):
     name = models.CharField(max_length=50)
+    artist = models.CharField(max_length=100, default='')
     record_label = models.CharField(max_length=50)
     release_date = models.DateField(auto_now=False, auto_now_add=False)
 
@@ -19,7 +20,7 @@ class Record(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('detail', kwargs={'pk': self.id})
+        return reverse('records_detail', kwargs={'pk': self.id})
 
 class Listening(models.Model):
     date = models.DateField()

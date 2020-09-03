@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Record
+from .models import Record, Listening
+from .forms import ListeningForm
 
 # Create your views here.
 
@@ -20,12 +21,10 @@ class RecordList(ListView):
 #     records = Record.objects.all()
 #     return render(request, 'records/index.html', {'records': records})
 
-class RecordDetail(DetailView):
-    model = Record
-
-# def records_detail(request, record_id):
-#     record = Record.objects.get(id=record_id)
-#     return render(request, 'records/detail.html', {'record': record})
+def records_detail(request, record_id):
+    record = Record.objects.get(id=record_id)
+    listening_form = ListeningForm()
+    return render(request, 'records/detail.html', {'record': record, 'listening_form': listening_form})
 
 class RecordCreate(CreateView):
     model = Record
@@ -38,3 +37,13 @@ class RecordUpdate(UpdateView):
 class RecordDelete(DeleteView):
     model = Record
     success_url = "/records/"
+
+def add_listening(request, record_id):
+    form = ListeningForm(request.POST)
+
+    if form.is_valid():
+        new_listening = form.save(commit=False)
+        new_listening.record_id = record_id
+        new_listening.save()
+
+    return redirect('detail', record_id=record_id)
