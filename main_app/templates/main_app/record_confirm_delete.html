@@ -6,7 +6,7 @@
 <form action="" method="POST">
     {% csrf_token %}
     <input type="submit" value="Yeah" class="btn">
-    <a href="{% url 'detail' record.id%}">Just kidding!</a>
+    <a href="{% url 'records_detail' record.id%}">Just kidding!</a>
 </form>
 
 {% endblock %}

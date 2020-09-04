@@ -32,7 +32,7 @@ class RecordCreate(CreateView):
 
 class RecordUpdate(UpdateView):
     model = Record
-    fields = ['record_label', 'release_year']
+    fields = ['name', 'artist', 'record_label', 'release_date']
 
 class RecordDelete(DeleteView):
     model = Record
@@ -46,4 +46,4 @@ def add_listening(request, record_id):
         new_listening.record_id = record_id
         new_listening.save()
 
-    return redirect('detail', record_id=record_id)
+    return redirect('records_detail', record_id=record_id)

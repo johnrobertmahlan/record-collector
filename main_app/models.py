@@ -20,7 +20,7 @@ class Record(models.Model):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('records_detail', kwargs={'pk': self.id})
+        return reverse('records_detail', kwargs={'record_id': self.id})
 
 class Listening(models.Model):
     date = models.DateField()
