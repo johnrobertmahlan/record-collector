@@ -41,6 +41,45 @@
             </tbody>
         </table>
     </div>
+
+
+    <div class="col s6">
+        <h3>Musicians Who Played on {{ record.name }}</h3>
+    {% if record.musicians.count %}
+        {% for musician in record.musicians.all %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">
+                        <p>{{ musician.name }} ({{ musician.instrument }})</p>
+                    </span>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h5>No musicians have been listed yet.</h5>
+    {% endif %}
+    </div>
+    <div class="col s6">
+        <h3>Musicians</h3>
+        {% if musicians.count %}
+            {% for musician in musicians.all %}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">
+                            <p>{{ musician.name }} ({{ musician.instrument }})
+                        </span>
+                    </div>
+                    <div class="card-action">
+                        <form action="{% url 'assoc_musician' record.id musician.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">Add</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h5>All the musicians have already played on this record.</h5>
+        {% endif %}
 </div>
 
 <script>

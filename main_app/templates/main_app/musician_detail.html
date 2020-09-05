@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+    <div class="card_content">
+        <span class="card-title">Name: {{ musician.name }}</span>
+        <br>
+        <span class="card-title">Instrument: {{ musician.instrument }}</span>
+    </div>
+    <div class="card-action">
+        <a href="{% url 'musicians_update' musician.id %}">Edit</a>
+        <a href="{% url 'musicians_delete' musician.id %}">Delete</a>
+    </div>
+</div>
+
+{% endblock %}

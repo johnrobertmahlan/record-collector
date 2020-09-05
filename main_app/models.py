@@ -10,20 +10,22 @@ MEDIA = (
 
 # Create your models here.
 
-class Label(models.Model):
+class Musician(models.Model):
     name = models.CharField(max_length=100)
+    instrument = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
     
     def get_absolute_url(self):
-        return reverse('labels_detail', kwargs={'pk': self.id})
+        return reverse('musicians_detail', kwargs={'pk': self.id})
 
 class Record(models.Model):
     name = models.CharField(max_length=50)
     artist = models.CharField(max_length=100, default='')
     record_label = models.CharField(max_length=50)
     release_date = models.DateField(auto_now=False, auto_now_add=False)
+    musicians = models.ManyToManyField(Musician)
 
     def __str__(self):
         return self.name
