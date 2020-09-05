@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Record, Listening
+from .models import Record, Listening, Label
 from .forms import ListeningForm
 
 # Create your views here.
@@ -47,3 +47,21 @@ def add_listening(request, record_id):
         new_listening.save()
 
     return redirect('records_detail', record_id=record_id)
+
+class LabelIndex(ListView):
+    model = Label
+
+class LabelCreate(CreateView):
+    model = Label
+    fields = '__all__'
+
+class LabelDetail(DetailView):
+    model = Label
+
+class LabelUpdate(UpdateView):
+    model = Label
+    fields = ['name']
+
+class LabelDelete(DeleteView):
+    model = Label
+    success_url = '/labels/'

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Check Out these Record Labels!</h1>
+
+{% for label in object_list %}
+<div class="card">
+    <a href="{% url 'labels_detail' label.id %}">
+    <div class="card_content">
+        <span class="card-title">{{ label.name }}</span>
+    </div>
+    </a>
+</div>
+{% endfor %}
+
+{% endblock %}
