@@ -16,6 +16,7 @@ urlpatterns = [
     path('musicians/<int:pk>/', views.MusicianDetail.as_view(), name='musicians_detail'),
     path('musicians/<int:pk>/update/', views.MusicianUpdate.as_view(), name='musicians_update'),
     path('musicians/<int:pk>/delete/', views.MusicianDelete.as_view(), name='musicians_delete'),
-    path('records/<int:record_id>/assoc_musician/<int:musician_id>', views.assoc_musician, name='assoc_musician'),
-    # path('records/<int:record_id>/unassoc_musician/<int:musician_id>', views.unassoc_musician, name='unassoc_musician')
+    path('records/<int:record_id>/assoc_musician/<int:musician_id>/', views.assoc_musician, name='assoc_musician'),
+    path('records/<int:record_id>/unassoc_musician/<int:musician_id>/', views.unassoc_musician, name='unassoc_musician'),
+    path('records/<int:record_id>/add_photo/', views.add_photo, name='add_photo')
 ]
