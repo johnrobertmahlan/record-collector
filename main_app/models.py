@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 MEDIA = (
     ('V', 'Vinyl'),
@@ -27,6 +28,7 @@ class Record(models.Model):
     record_label = models.CharField(max_length=50)
     release_date = models.DateField(auto_now=False, auto_now_add=False)
     musicians = models.ManyToManyField(Musician)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

@@ -8,6 +8,8 @@ from .forms import ListeningForm
 import uuid
 import boto3
 from botocore.exceptions import ClientError
+from django.contrib.auth import login 
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 
@@ -36,6 +38,9 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+def profile(request):
+    return render(request, 'accounts/profile.html')
+
 class RecordList(ListView):
     model = Record
 
@@ -51,7 +56,10 @@ def records_detail(request, record_id):
 
 class RecordCreate(CreateView):
     model = Record
-    fields = '__all__'
+    fields = ['name', 'artist', 'record_label', 'release_date']
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class RecordUpdate(UpdateView):
     model = Record
@@ -96,3 +104,17 @@ def assoc_musician(request, record_id, musician_id):
 def unassoc_musician(request, record_id, musician_id):
     Record.objects.get(id=record_id).musicians.remove(musician_id)
     return redirect('records_detail', record_id=record_id)
+
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+        else:
+            error_message = 'Something went wrong! Please try again.'
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)

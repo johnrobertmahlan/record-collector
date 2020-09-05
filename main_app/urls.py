@@ -18,5 +18,6 @@ urlpatterns = [
     path('musicians/<int:pk>/delete/', views.MusicianDelete.as_view(), name='musicians_delete'),
     path('records/<int:record_id>/assoc_musician/<int:musician_id>/', views.assoc_musician, name='assoc_musician'),
     path('records/<int:record_id>/unassoc_musician/<int:musician_id>/', views.unassoc_musician, name='unassoc_musician'),
-    path('records/<int:record_id>/add_photo/', views.add_photo, name='add_photo')
+    path('records/<int:record_id>/add_photo/', views.add_photo, name='add_photo'),
+    path('accounts/signup/', views.signup, name='signup')
 ]
