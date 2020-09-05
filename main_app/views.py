@@ -3,19 +3,22 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Record, Listening, Musician, Photo
+from .models import Record, Listening, Musician, Photo, User
 from .forms import ListeningForm
 import uuid
 import boto3
 from botocore.exceptions import ClientError
 from django.contrib.auth import login 
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 S3_BASE_URL = "https://jrm-record-collector.s3.amazonaws.com/"
 BUCKET = "jrm-record-collector"
 
+@login_required
 def add_photo(request, record_id):
     photo_file = request.FILES.get('photo-file', None)
     if photo_file:
@@ -38,37 +41,39 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
-def profile(request):
-    return render(request, 'accounts/profile.html')
-
-class RecordList(ListView):
-    model = Record
+class RecordList(LoginRequiredMixin, ListView):
+    # model = Record
+    def get_queryset(self):
+        queryset = Record.objects.filter(user=self.request.user)
+        return queryset
 
 # def records_index(request):
 #     records = Record.objects.all()
 #     return render(request, 'records/index.html', {'records': records})
 
+@login_required
 def records_detail(request, record_id):
     record = Record.objects.get(id=record_id)
     musicians_not_on_record = Musician.objects.exclude(id__in=record.musicians.all().values_list('id'))
     listening_form = ListeningForm()
     return render(request, 'records/detail.html', {'record': record, 'listening_form': listening_form, 'musicians': musicians_not_on_record})
 
-class RecordCreate(CreateView):
+class RecordCreate(LoginRequiredMixin, CreateView):
     model = Record
     fields = ['name', 'artist', 'record_label', 'release_date']
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class RecordUpdate(UpdateView):
+class RecordUpdate(LoginRequiredMixin, UpdateView):
     model = Record
     fields = ['name', 'artist', 'record_label', 'release_date']
 
-class RecordDelete(DeleteView):
+class RecordDelete(LoginRequiredMixin, DeleteView):
     model = Record
     success_url = "/records/"
 
+@login_required
 def add_listening(request, record_id):
     form = ListeningForm(request.POST)
 
@@ -79,28 +84,30 @@ def add_listening(request, record_id):
 
     return redirect('records_detail', record_id=record_id)
 
-class MusicianIndex(ListView):
+class MusicianIndex(LoginRequiredMixin, ListView):
     model = Musician
 
-class MusicianCreate(CreateView):
+class MusicianCreate(LoginRequiredMixin, CreateView):
     model = Musician
     fields = '__all__'
 
-class MusicianDetail(DetailView):
+class MusicianDetail(LoginRequiredMixin, DetailView):
     model = Musician
 
-class MusicianUpdate(UpdateView):
+class MusicianUpdate(LoginRequiredMixin, UpdateView):
     model = Musician
     fields = ['name', 'instrument']
 
-class MusicianDelete(DeleteView):
+class MusicianDelete(LoginRequiredMixin, DeleteView):
     model = Musician
     success_url = '/musicians/'
 
+@login_required
 def assoc_musician(request, record_id, musician_id):
     Record.objects.get(id=record_id).musicians.add(musician_id)
     return redirect('records_detail', record_id=record_id)
 
+@login_required
 def unassoc_musician(request, record_id, musician_id):
     Record.objects.get(id=record_id).musicians.remove(musician_id)
     return redirect('records_detail', record_id=record_id)
